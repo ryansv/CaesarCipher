@@ -2,17 +2,32 @@ class CaesarCipher
   ALPHABET = ('a'..'z').to_a
   
   def initialize(number_to_shift)
-    @encyption_hash = Hash[ALPHABET.zip ALPHABET.rotate(number_to_shift)]
+    @encryption_hash = Hash[ALPHABET.zip ALPHABET.rotate(number_to_shift)]
     @decryption_hash = Hash[ALPHABET.zip ALPHABET.rotate(-number_to_shift)]
   end
   
   def encrypt(word)
-    new_word = ""
+    do_encryption(word, :encrypt)
+  end
+	
+	def decrypt(word)
+    do_encryption(word, :decrypt)
+  end
+  
+	private
+	
+	def do_encryption(word, method)
+		new_word = ""
     for letter in word.chars
       lowercase_letter = letter.downcase
       is_lowercase = letter == lowercase_letter
-      encrypted_letter = @encyption_hash[lowercase_letter]
-      
+			
+			if method == :encrypt then
+				encrypted_letter = @encryption_hash[lowercase_letter]
+      elsif method == :decrypt then
+				encrypted_letter = @decryption_hash[lowercase_letter]
+      end
+			
       if !encrypted_letter then
         new_word += letter
       else
@@ -25,8 +40,7 @@ class CaesarCipher
       
     end
     return new_word
-  end
-  
+	end
 end
 
 puts "Enter phrase to encrypt: "
@@ -41,4 +55,7 @@ rescue ArgumentError
 end
 
 cipher = CaesarCipher.new(shift)
-puts "The phrase: " + word + " is encrypted to: " + cipher.encrypt(word)
+encrypted_word = cipher.encrypt(word)
+decrypted_word = cipher.decrypt(encrypted_word)
+puts "The phrase: " + word + " is encrypted to: " + encrypted_word
+puts "Decrypting: " + encrypted_word + " gives the original word: " + decrypted_word
