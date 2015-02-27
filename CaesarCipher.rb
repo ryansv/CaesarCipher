@@ -3,7 +3,7 @@ class CaesarCipher
   
   def initialize(number_to_shift)
     @encryption_hash = Hash[ALPHABET.zip ALPHABET.rotate(number_to_shift)]
-    @decryption_hash = Hash[ALPHABET.zip ALPHABET.rotate(-number_to_shift)]
+    @decryption_hash = @encryption_hash.invert
   end
   
   def encrypt(word)
