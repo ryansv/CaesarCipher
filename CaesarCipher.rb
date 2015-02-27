@@ -10,22 +10,23 @@ class CaesarCipher
     do_encryption(word, :encrypt)
   end
 	
-	def decrypt(word)
+  def decrypt(word)
     do_encryption(word, :decrypt)
   end
   
-	private
+  private
 	
-	def do_encryption(word, method)
-		new_word = ""
+  def do_encryption(word, method)
+    new_word = ""
+    
     for letter in word.chars
       lowercase_letter = letter.downcase
       is_lowercase = letter == lowercase_letter
 			
-			if method == :encrypt then
-				encrypted_letter = @encryption_hash[lowercase_letter]
+      if method == :encrypt then
+        encrypted_letter = @encryption_hash[lowercase_letter]
       elsif method == :decrypt then
-				encrypted_letter = @decryption_hash[lowercase_letter]
+        encrypted_letter = @decryption_hash[lowercase_letter]
       end
 			
       if !encrypted_letter then
@@ -37,10 +38,11 @@ class CaesarCipher
           new_word += encrypted_letter.upcase
         end
       end
-      
     end
+    
     return new_word
 	end
+  
 end
 
 puts "Enter phrase to encrypt: "
