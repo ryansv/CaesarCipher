@@ -41,7 +41,7 @@ class CaesarCipher
     end
     
     return new_word
-	end
+  end
   
 end
 
